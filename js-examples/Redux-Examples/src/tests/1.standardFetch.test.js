@@ -30,7 +30,7 @@ describe('dataSaga', () => {
     return (
       expectSaga(dataSaga)
         // Setup mocks
-        // Provide will intercept your saga and mock where required
+        // .provide will intercept your saga and mock where required
         // It takes a array of tuples
         // Each tuple first takes a matcher of what effect it should catch (call, put, select, etc)
         // And optionally takes a second value of what it should return when it catches it
@@ -60,7 +60,7 @@ describe('dataSaga', () => {
         // You can optionally check the final state
         .hasFinalState(finalState)
 
-        // silentRun actually starts the saga (run works too)
+        // silentRun actually starts the test (run works too)
         // silentRun prevents warning messages from the saga timing out (which it will do if you use takeEvery for example)
         .silentRun()
     );
