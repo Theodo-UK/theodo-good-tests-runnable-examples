@@ -1,6 +1,11 @@
 # Theodo Good Tests Runnable Examples
 
-Some runnable examples related to the docs at [theodo-good-tests](https://github.com/Theodo-UK/theodo-good-tests)
+<div align="center">
+    <a href="https://www.theodo.co.uk">
+        <img width="200px" src="./theodo.png" align="center" alt="Theodo">
+    </a>
+    <h3>Some runnable examples related to the docs at <a href="https://github.com/Theodo-UK/theodo-good-tests">theodo-good-tests</a></h3>
+</div>
 
 ## JS Examples
 
@@ -35,3 +40,10 @@ Some runnable examples related to the docs at [theodo-good-tests](https://github
 - jest.spyOn
 - jest.mock
   - requireActual, jest.doMock, default export
+
+### <a id="redux-examples"></a> Redux-Examples
+
+- Sagas
+  - `redux-saga-test-plan` fetch with success and failure
+  - specific final state
+  - matchers
