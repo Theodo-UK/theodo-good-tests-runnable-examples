@@ -26,9 +26,15 @@ describe('dataSaga', () => {
       },
     };
 
+    // Make sure to return expectSaga as it is asynchronous (your test will automatically pass if you don't return this)
     return (
       expectSaga(dataSaga)
         // Setup mocks
+        // Provide will intercept your saga and mock where required
+        // It takes a array of tuples
+        // Each tuple first takes a matcher of what effect it should catch (call, put, select, etc)
+        // And optionally takes a second value of what it should return when it catches it
+        // Note: provide doesn't care if these functions get called, it just steps in if they do get called
         .provide([
           [
             matchers.call(fetch, 'https://api/endpoint'),
@@ -39,15 +45,23 @@ describe('dataSaga', () => {
             },
           ],
         ])
+
         // Setup reducer with initial state
         .withReducer(combineReducers({ myReducer }), initialState)
-        // Dispatch initial action
+
+        // Dispatch initial action to start your saga
         .dispatch(fetchDataRequest())
+
         // Check that expected stuff has happened (order doesn't matter)
+        // You can check any effect here and your test will fail if these don't get called during the saga run
         .put(fetchDataSuccess(['wow some api']))
         .put(push('/data-page'))
-        // Check final state
+
+        // You can optionally check the final state
         .hasFinalState(finalState)
+
+        // silentRun actually starts the saga (run works too)
+        // silentRun prevents warning messages from the saga timing out (which it will do if you use takeEvery for example)
         .silentRun()
     );
   });
@@ -62,7 +76,7 @@ describe('dataSaga', () => {
     };
     return (
       expectSaga(dataSaga)
-        // Setup mock with error
+        // Setup mock with a provided error this time
         .provide([
           [
             matchers.call(fetch, 'https://api/endpoint'),
@@ -73,10 +87,9 @@ describe('dataSaga', () => {
         .dispatch(fetchDataRequest())
         .put(fetchDataFailure('404 error'))
 
-        // Check that some stuff does not happen
+        // Check that some stuff does not happen, will fail if it does happen
         .not.put(push('/data-page'))
 
-        // Check final state
         .hasFinalState(finalState)
         .silentRun()
     );
